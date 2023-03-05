@@ -1,3 +1,18 @@
+- hosts: all
+#  become: true
+  vars:
+  - dockerfile_folder: "Dockerfile"
+  - docker_image_name: "abctech_img"
+  - docker_container_name: "abctech_container"
+  - patting_ssh_port: "22"
+  - patting_http_port: "8081"
+  tasks:
+  - name: "Copy Docker file"
+    copy:
+     src: "{{dockerfile_folder}}"
+     dest: "/tmp/docker-ansible/"
+
+  - name: "Build docker image from Dockerfile"
     docker_image:
        name:  "{{docker_image_name}}"
        build:
