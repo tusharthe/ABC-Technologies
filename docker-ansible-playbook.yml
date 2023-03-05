@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: kslave
 #  become: true
   vars:
 #  - dockerfile_folder: "Dockerfile"
