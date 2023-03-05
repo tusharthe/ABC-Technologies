@@ -17,6 +17,13 @@
     copy:
      src: "Dockerfile"
      dest: "/tmp/docker-ansible/"
+     remote_src: yes
+     
+  - name: "Copy artifacts (war) file"
+    copy:
+     src: "Dockerfile"
+     dest: "/tmp/docker-ansible/"
+     remote_src: yes 
 
   - name: "Build docker image from Dockerfile"
     docker_image:
