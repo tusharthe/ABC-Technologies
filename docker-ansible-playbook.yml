@@ -7,6 +7,11 @@
   - patting_ssh_port: "22"
   - patting_http_port: "8081"
   tasks:
+  - name: "Create folder in tmp"
+    file:     
+     path: "/tmp/docker-ansible/"
+     state: "directory"
+     
   - name: "Copy Docker file"
     copy:
      src: "{{dockerfile_folder}}"
