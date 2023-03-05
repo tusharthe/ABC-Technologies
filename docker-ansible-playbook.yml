@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: ubuntucli1
 #  become: true
   vars:
   - dockerfile_folder: "Dockerfile"
