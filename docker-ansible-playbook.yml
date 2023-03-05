@@ -21,7 +21,7 @@
      
   - name: "Copy artifacts (war) file"
     copy:
-     src: "Dockerfile"
+     src: "./target/*.war"
      dest: "/tmp/docker-ansible/"
      remote_src: yes 
 
