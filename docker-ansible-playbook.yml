@@ -15,9 +15,9 @@
      
   - name: "Copy Docker file"
     copy:
-     src: "Dockerfile"
+     src: "{{playbook_dir}}/Dockerfile"
      dest: "/tmp/docker-ansible/"
-     remote_src: yes
+ #    remote_src: yes
      
   - name: "Copy artifacts (war) file"
     copy:
