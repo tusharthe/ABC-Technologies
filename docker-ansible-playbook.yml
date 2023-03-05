@@ -1,7 +1,7 @@
 - hosts: ubuntucli1
 #  become: true
   vars:
-  - dockerfile_folder: "Dockerfile"
+#  - dockerfile_folder: "Dockerfile"
   - docker_image_name: "abctech_img"
   - docker_container_name: "abctech_container"
   - patting_ssh_port: "22"
@@ -15,7 +15,7 @@
      
   - name: "Copy Docker file"
     copy:
-     src: "{{dockerfile_folder}}"
+     src: "Dockerfile"
      dest: "/tmp/docker-ansible/"
 
   - name: "Build docker image from Dockerfile"
@@ -23,7 +23,7 @@
        name:  "{{docker_image_name}}"
        build:
 #        pull: yes
-         path: "/tmp/docker-ansible/{{dockerfile_folder}}/"
+         path: "/tmp/docker-ansible/"
        state: present
        source: build
 
