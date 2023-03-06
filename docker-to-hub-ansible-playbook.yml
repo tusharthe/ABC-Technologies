@@ -8,7 +8,12 @@
   - dockerhub_username: tkparial1
   - dockerhub_password: dckr_pat_8nexYY8pdWKE-UUj6LIXYwjaM8E
   - patting_http_port: "8081"
-  tasks:
+  tasks:  
+  - name: Login to Docker Hub
+      docker_login:
+        username: "{{ dockerhub_username }}"
+        password: "{{ dockerhub_password }}"
+  
   - name: "Create folder in tmp"
     file:     
      path: "/tmp/docker-ansible/"
