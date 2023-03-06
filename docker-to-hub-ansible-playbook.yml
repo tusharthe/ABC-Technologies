@@ -2,8 +2,8 @@
 #  become: yes
 
   vars:
-  - docker_image_name: "abctech_img"
-  - docker_container_name: "abctech_container"
+  - docker_image_name: "tkparial1/abctech_img"
+  - docker_container_name: "tkparial1/abctech_container"
   - image_tag: latest
   - dockerhub_username: tkparial1
   - dockerhub_password: dckr_pat_pFqZ8imH8VTll-G2UEm6VQrSXv4
