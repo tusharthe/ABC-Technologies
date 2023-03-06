@@ -27,16 +27,13 @@
      dest: "/tmp/docker-ansible/"
 #     remote_src: yes 
 
-  - name: "Build docker image from Dockerfile"
+  - name: "Build docker image from Dockerfile and Push Docker image to Docker Hub"
     docker_image:
        name:  "{{docker_image_name}}"
        build:
 #        pull: yes
-         path: "/tmp/docker-ansible/"
-       state: present
+         path: "/tmp/docker-ansible/"        
+       tag: v1
+       push: true
        source: build
        
-  - name: "Push Docker image to Docker Hub"
-    docker_image:
-       name: "{{ docker_image_name }}:{{ image_tag }}"
-       push: yes
