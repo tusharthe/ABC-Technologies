@@ -1,5 +1,3 @@
----
-- name: Push Docker image to Docker Hub
 - hosts: ubuntucli1
 #  become: yes
 
