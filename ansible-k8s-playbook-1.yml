@@ -1,0 +1,94 @@
+---
+- name: Create Deployment and Service ( Deploy application on Kubernetes )
+  hosts: k8s-control
+  vars:
+    deployment_name: abctech1-deployment
+    service_name: abctech1-service
+    app_label: abctech1
+    container_image: tkparial1/abctech_img:v1
+    container_port: 8086
+    service_port: 80
+    namespace: abctech1
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Install kubernetes python module
+      pip:
+        name: kubernetes
+        state: present
+
+    - name: Load Docker image to host
+      docker_image:
+        name: "{{ container_image }}"
+        source: pull
+
+    - name: Create namespace
+      kubernetes.core.k8s:
+        api: "{{ lookup('env', 'K8S_API_ENDPOINT') }}"
+        kubeconfig: "{{ lookup('env', 'K8S_KUBECONFIG_PATH') }}"
+        kind: Namespace
+        name: "{{ namespace }}"
+        state: present
+
+    - name: Create deployment
+      kubernetes.core.k8s:
+        api: "{{ lookup('env', 'K8S_API_ENDPOINT') }}"
+        kubeconfig: "{{ lookup('env', 'K8S_KUBECONFIG_PATH') }}"
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: "{{ deployment_name }}"
+            namespace: "{{ namespace }}"
+            labels:
+              app: "{{ app_label }}"
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: "{{ app_label }}"
+            template:
+              metadata:
+                labels:
+                  app: "{{ app_label }}"
+              spec:
+                containers:
+                  - name: abctech1
+                    image: "{{ container_image }}"
+                    ports:
+                      - containerPort: "{{ container_port }}"
+        state: present
+
+    - name: Create service
+      kubernetes.core.k8s:
+        api: "{{ lookup('env', 'K8S_API_ENDPOINT') }}"
+        kubeconfig: "{{ lookup('env', 'K8S_KUBECONFIG_PATH') }}"
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: "{{ service_name }}"
+            namespace: "{{ namespace }}"
+            labels:
+              app: "{{ app_label }}"
+          spec:
+            type: NodePort
+            ports:
+              - port: "{{ service_port }}"
+                targetPort: "{{ container_port }}"
+            selector:
+              app: "{{ app_label }}"
+        state: present
+
+    - name: Display nodes information
+      kubernetes.core.k8s_info:
+        kind: Node
+      register: nodes_info
+
+    - name: Display kubectl get all command output
+      command: kubectl get all -n "{{ namespace }}"
+      register: kubectl_output
+
+    - name: Display kubectl output
+      debug:
+        var: kubectl_output.stdout
+...
