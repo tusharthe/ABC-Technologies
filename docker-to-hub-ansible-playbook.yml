@@ -1,4 +1,4 @@
-- hosts: ubuntucli1
+- hosts: kslave
 #  become: yes
 
   vars:
