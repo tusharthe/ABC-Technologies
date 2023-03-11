@@ -1,6 +1,6 @@
 ---
 - name: Create Deployment and Service ( Deploy application on Kubernetes )
-  hosts: k8s-control
+  hosts: kmaster
   vars:
     deployment_name: abctech1-deployment
     service_name: abctech1-service
